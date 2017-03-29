@@ -74,7 +74,7 @@ var Loader = exports.Loader = function(dbOrUri, options) {
       safe: true
     }, options);
   }
-  
+
   this.options = options;
   this.modifiers = [];
 };
@@ -274,8 +274,9 @@ var _connect = function(loader, cb) {
   if (loader.client) return cb(null, loader.client);
 
   var options = loader.options;
+  var serverOptions = (loader.options && loader.options.server) ? loader.options.server : {};
 
-  var db = new mongo.Db(options.db, new mongo.Server(options.host, options.port, {}), {safe: options.safe});
+  var db = new mongo.Db(options.db, new mongo.Server(options.host, options.port, serverOptions), {safe: options.safe});
 
   db.open(function(err, db) {
     if (err) return cb(err);
